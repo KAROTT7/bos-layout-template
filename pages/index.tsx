@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import styles from '../styles/Home.module.less'
+import styles from '../assets/Home.module.less'
 import { MenuFoldOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
 
