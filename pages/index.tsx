@@ -1,11 +1,26 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 import styles from '../styles/Home.module.less'
 import { MenuFoldOutlined } from '@ant-design/icons'
+import { Menu } from 'antd'
 
-const data = {
-  a: 1,
-  b: 2
+const { SubMenu } = Menu
+
+const menuList = [
+  { path: '/' },
+  {
+    path: '/transaction',
+    routes: [
+      { path: '/transaction/list' },
+      { path: '/transaction/list/detail', hide: true },
+      { path: '/transaction/send' },
+    ]
+  }
+]
+
+function geneMenu(menuList) {
+  
 }
 
 export default function Home(props) {
@@ -36,7 +51,16 @@ export default function Home(props) {
           <MenuFoldOutlined className={styles.menuIcon} onClick={() => setCollapsed(!collapsed)} />
         </header>
         <div className={styles.container}>
-          content
+          <div>
+            <Link href="/transaction/list">
+              <a>list</a>
+            </Link>
+          </div>
+          <div>
+            <Link href="/transaction/send">
+              <a>send</a>
+            </Link>
+          </div>
         </div>
       </main>
     </div>
