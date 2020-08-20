@@ -1,0 +1,36 @@
+@color-primary: #1890ff;
+
+.aside {
+  background-color: #000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  color: #fff;
+  transition: width .3s;
+}
+
+.main {
+  transition: margin-left .3s;
+  .header {
+    height: 40px;
+    background-color: #fff;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    .menuIcon {
+      cursor: pointer;
+      color: #444;
+      transition: color .3s;
+      outline: none;
+      &:hover {
+        color: @color-primary;
+      }
+    }
+  }
+
+  .container {
+    margin: 10px;
+  }
+}
