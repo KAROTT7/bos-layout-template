@@ -5,8 +5,17 @@ import { Menu } from 'antd'
 import Link from 'next/link'
 import styles from '../styles/Home.module.less'
 import {
-  MenuFoldOutlined
+  MenuFoldOutlined,
+  HomeOutlined,
+  ProfileOutlined,
+  TeamOutlined
 } from '@ant-design/icons'
+
+const menuIcons = {
+	'/': <HomeOutlined />,
+	'/transaction': <ProfileOutlined />,
+	'/transaction/stats': <TeamOutlined />,
+}
 
 const { SubMenu } = Menu
 
@@ -32,28 +41,32 @@ const menuList = [
   }
 ]
 
+function geneMenuItem(menu) {
+  return (
+    <Menu.Item key={menu.path} icon={menuIcons[menu.path]}>
+      <Link href={menu.path}>
+        <a>{menu.name}</a>
+      </Link>
+    </Menu.Item>
+  )
+}
+
 function geneMenu(menuList) {
   return menuList.map(menu => {
     if (menu.routes && menu.routes.length) {
       return (
-        <SubMenu key={menu.path} title={menu.name}>
+        <SubMenu icon={menuIcons[menu.path]} key={menu.path} title={menu.name}>
           {menu.routes.map(child => {
             if (child.hide !== true) {
               if (child.routes && child.routes.length) {
                 return (
-                  <SubMenu key={child.path} title={child.name}>
+                  <SubMenu key={child.path} title={child.name} icon={menuIcons[child.path]}>
                     {geneMenu(child.routes)}
                   </SubMenu>
                 )
               }
 
-              return (
-                <Menu.Item key={child.path}>
-                  <Link href={child.path}>
-                    <a>{child.name}</a>
-                  </Link>
-                </Menu.Item>
-              )
+              return geneMenuItem(child)
             }
 
             return null
@@ -61,13 +74,7 @@ function geneMenu(menuList) {
         </SubMenu>
       )
     } else if (menu.hide !== true) {
-      return (
-        <Menu.Item key={menu.path}>
-          <Link href={menu.path}>
-            <a>{menu.name}</a>
-          </Link>
-        </Menu.Item>
-      )
+      return geneMenuItem(menu)
     }
   })
 }
