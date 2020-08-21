@@ -1,8 +1,15 @@
 import React, { useState } from 'react'
-import Head from 'next/head'
 import Link from 'next/link'
-import styles from '../assets/Home.module.less'
-import { MenuFoldOutlined } from '@ant-design/icons'
+import styles from '../styles/Home.module.less'
+import {
+  AppstoreOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  PieChartOutlined,
+  DesktopOutlined,
+  ContainerOutlined,
+  MailOutlined
+} from '@ant-design/icons'
 import { Menu } from 'antd'
 
 const { SubMenu } = Menu
@@ -20,7 +27,21 @@ const menuList = [
 ]
 
 function geneMenu(menuList) {
-  
+  return menuList.map(menu => {
+    if (menu.routes && menu.routes.length) {
+      return (
+        <SubMenu key={menu.path} title={menu.path}>
+          {menu.routes.map(child => (
+            <Menu.Item key={menu.path}>{menu.path}</Menu.Item>
+          ))}
+        </SubMenu>
+      )
+    }
+
+    return (
+      <Menu.Item key={menu.path}>{menu.path}</Menu.Item>
+    )
+  })
 }
 
 export default function Home(props) {
@@ -29,17 +50,49 @@ export default function Home(props) {
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Bos-Layout-Template</title>
-      </Head>
-
       <aside
         className={styles.aside}
         style={{
           width: asideWidth
         }}
       >
-        111
+        {/* <Menu
+          defaultSelectedKeys={['1']}
+          inlineCollapsed={collapsed}
+        >
+          {geneMenu(menuList)}
+        </Menu> */}
+        <Menu
+          defaultSelectedKeys={['1']}
+          defaultOpenKeys={['sub1']}
+          mode="inline"
+          theme="dark"
+          inlineCollapsed={collapsed}
+        >
+          <Menu.Item key="1" icon={<PieChartOutlined />}>
+            Option 1
+          </Menu.Item>
+          <Menu.Item key="2" icon={<DesktopOutlined />}>
+            Option 2
+          </Menu.Item>
+          <Menu.Item key="3" icon={<ContainerOutlined />}>
+            Option 3
+          </Menu.Item>
+          <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
+            <Menu.Item key="5">Option 5</Menu.Item>
+            <Menu.Item key="6">Option 6</Menu.Item>
+            <Menu.Item key="7">Option 7</Menu.Item>
+            <Menu.Item key="8">Option 8</Menu.Item>
+          </SubMenu>
+          <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Navigation Two">
+            <Menu.Item key="9">Option 9</Menu.Item>
+            <Menu.Item key="10">Option 10</Menu.Item>
+            <SubMenu key="sub3" title="Submenu">
+              <Menu.Item key="11">Option 11</Menu.Item>
+              <Menu.Item key="12">Option 12</Menu.Item>
+            </SubMenu>
+          </SubMenu>
+        </Menu>
       </aside>
       <main
         className={styles.main}
